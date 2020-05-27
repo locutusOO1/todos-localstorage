@@ -3,7 +3,32 @@ var todoForm = document.querySelector("#todo-form");
 var todoList = document.querySelector("#todo-list");
 var todoCountSpan = document.querySelector("#todo-count");
 
-var todos = ["Learn HTML", "Learn CSS", "Learn JavaScript"];
+
+// # Local Storage Todo's
+
+// In this activity, we will working on storing our todos in `localStorage`. 
+
+// ## Instructions
+
+// * Inside the `init()` function:
+
+//   * Set a variable called `storedTodos` that retrieves the todos from `localStorage` and parses the JSON string to an object.
+
+//   * Check if the todos were retrieved from `localStorage` and if so, set a `todos` variable with the `storedTodos`.
+
+//   * Lastly, render the todos to the DOM.
+
+// * Inside the `storeTodos()` function:
+
+//   * Stringify and set the "todos" key in `localStorage` to the `todos` array.
+
+// ## Hint
+
+// * You will need to use `JSON.stringify` and `JSON.parse`.
+
+
+
+var todos = JSON.parse(localStorage.getItem('todos')) || [];
 
 // # Render Todos
 
@@ -31,10 +56,13 @@ var todos = ["Learn HTML", "Learn CSS", "Learn JavaScript"];
 function removeTodo(event) {
     var todoIndex = parseInt(event.target.parentElement.getAttribute("data-index"));
     todos.splice(todoInput,1);
+    updateLocalStorage();
     renderTodos();
 }
 
-
+function updateLocalStorage() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 
 function renderTodos() {
     todoList.innerHTML = "";
@@ -89,10 +117,14 @@ todoForm.addEventListener('submit', function(event) {
     var newTodoText = todoInput.value;
     if (newTodoText !== "") {
         todos.push(newTodoText);
+        updateLocalStorage();
         todoInput.value = "";
         renderTodos();
     }
 })
 
 
+
 renderTodos();
+
+
