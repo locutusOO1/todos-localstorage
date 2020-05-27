@@ -28,12 +28,46 @@ var todos = ["Learn HTML", "Learn CSS", "Learn JavaScript"];
 //   * Finally the new `li` should be appended to the `ul` provided.
 
 
+function removeTodo(event) {
+    var todoIndex = parseInt(event.target.parentElement.getAttribute("data-index"));
+    todos.splice(todoInput,1);
+    renderTodos();
+}
+
+
+
 function renderTodos() {
     todoList.innerHTML = "";
     todoCountSpan.textContent = todos.length;
     for (var i = 0; i < todos.length; i++) {
         var li = document.createElement("li");
         li.textContent = todos[i];
+
+// # Complete Todos
+
+// In this activity, we will create a "complete" button that successfully removes a todo item from the list when clicked.
+
+// ## Instructions
+
+// * Modify your `renderTodos()` function:
+
+//   * When a new todo is created, add a `data-index` for each `li`.
+
+//   * Generate a button that says "Complete" and append it to your `li`.
+
+// * Add an event listener so that when a user clicks the Complete button, it accesses the `data-index` value and removes that todo element from the list.
+
+// ## Hint
+
+// * You can use `setAttribute` for `data-index` and `splice` to remove your todo from the list.
+
+        li.setAttribute("data-index",i);
+        var button = document.createElement("button");
+        button.textContent = "Complete";
+        li.appendChild(button);
+
+        button.addEventListener("click", removeTodo);
+
         todoList.appendChild(li);
     }
 }
@@ -59,5 +93,6 @@ todoForm.addEventListener('submit', function(event) {
         renderTodos();
     }
 })
+
 
 renderTodos();
